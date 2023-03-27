@@ -8,9 +8,20 @@ jobs:
   pr-preview:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Клонирование репозитория
+        uses: actions/checkout@v3
+      - name: Настройка NodeJS
+        uses: actions/setup-node@v3
         with:
           node-version: '16'
-      - run: npm ci
-      - run: npm run build
+      - name: Сборка и публикация превью
+        uses: afc163/surge-preview@v1
+        id: preview_step
+        with:
+          surge_token: ${{ secrets.SURGE_TOKEN }}
+          dist: public
+          build: |
+            npm ci
+            npm run build
+      - name: Вывод ссылки в консоль
+        run: echo "Сайт доступен по ссылке — ${{ steps.preview_step.outputs.preview_url }}"
