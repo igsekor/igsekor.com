@@ -1,0 +1,40 @@
+name: pr-preview
+run-name: Превью
+
+on:
+  pull_request
+
+jobs: 
+  pr-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Клонирование репозитория
+        uses: actions/checkout@v3
+      - name: Настройка NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Сборка и публикация превью
+        uses: igsekor/surge-preview
+        id: preview_step
+        with:
+          surge_token: ${{ secrets.SURGE_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          dist: _site
+          failOnError: true
+          teardown: true
+          build: |
+            npm ci
+            npm run build
+      - name: Вывод ссылки в консоль
+        run: echo "Сайт доступен по ссылке — ${{ steps.preview_step.outputs.preview_url }}"
+      - name: Вывод ссылки в PR
+        uses: hasura/comment-progress@v2.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: 'igsekor/igsekor_com'
+          number: ${{ github.event.number }}
+          id: preview-result
+          message: "Превью сайта доступно по [ссылке](https://${{ steps.preview_step.outputs.preview_url }})"
+          fail: true
+          recreate: true
