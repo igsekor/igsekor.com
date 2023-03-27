@@ -8,5 +8,4 @@ jobs:
   pr-preview:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-        echo "PR - {{ github.event.ref }}"
+      - run: echo "PR - {{ github.event.ref }}"
