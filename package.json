@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/igsekor/igsekor.com/issues"
   },
-  "homepage": "https://github.com/igsekor/igsekor.com#readme"
+  "homepage": "https://github.com/igsekor/igsekor.com#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.0"
+  }
 }
