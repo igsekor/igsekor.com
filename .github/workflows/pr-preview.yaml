@@ -19,7 +19,9 @@ jobs:
         id: preview_step
         with:
           surge_token: ${{ secrets.SURGE_TOKEN }}
-          dist: public
+          dist: _site
+          failOnError: true
+          teardown: true
           build: |
             npm ci
             npm run build
