@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: '16'
       - name: Сборка и публикация превью
-        uses: afc163/surge-preview@v1
+        uses: igsekor/surge-preview
         id: preview_step
         with:
           surge_token: ${{ secrets.SURGE_TOKEN }}
