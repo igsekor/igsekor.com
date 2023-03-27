@@ -1,0 +1,12 @@
+name: pr-preview
+run-name: Превью
+
+on:
+  pull_request
+
+jobs: 
+  pr-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+        echo "PR - {{ github.event.ref }}"
