@@ -28,3 +28,14 @@ jobs:
             npm run build
       - name: Вывод ссылки в консоль
         run: echo "Сайт доступен по ссылке — ${{ steps.preview_step.outputs.preview_url }}"
+      - name: Вывод ссылки в PR
+        uses: hasura/comment-progress@v2.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: 'igsekor/igsekor_com'
+          number: ${{ github.event.number }}
+          commit-sha: ${{ github.sha }}
+          id: preview-result
+          message: "Сайт доступен по ссылке — ${{ steps.preview_step.outputs.preview_url }}"
+          fail: true
+          recreate: true
