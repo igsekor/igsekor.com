@@ -35,6 +35,6 @@ jobs:
           repository: 'igsekor/igsekor_com'
           number: ${{ github.event.number }}
           id: preview-result
-          message: "Сайт доступен по ссылке — ${{ steps.preview_step.outputs.preview_url }}"
+          message: "Превью сайта доступно по [ссылке](${{ steps.preview_step.outputs.preview_url }})"
           fail: true
           recreate: true
