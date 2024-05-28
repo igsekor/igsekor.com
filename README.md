@@ -1,40 +1,36 @@
-# igsekor.com
+# Сайт igsekor.com
 
-This template should help get you started developing with Vue 3 in Vite.
+Этот шаблон должен помочь вам начать разработку с помощью Vue 3 и Vite.
 
-## Recommended IDE Setup
+## Рекомендованный сетап для разработки
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (и удалить / деактивировать Vetur).
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
+## Работа над проектом
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Работа в режиме разработки (автоматическая перезагрузка после внесения изменений)
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+### Сборка сайта с минификацией
 
 ```sh
 npm run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+### Запуск unit-тестов [Vitest](https://vitest.dev/)
 
 ```sh
 npm run test:unit
 ```
 
-### Run End-to-End Tests with [Playwright](https://playwright.dev)
+### Запуск e2e-тестов [Playwright](https://playwright.dev)
 
 ```sh
 # Install browsers for the first run
@@ -53,7 +49,7 @@ npm run test:e2e -- tests/example.spec.ts
 npm run test:e2e -- --debug
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### Запуск линтера [ESLint](https://eslint.org/)
 
 ```sh
 npm run lint
