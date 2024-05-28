@@ -36,7 +36,7 @@ jobs:
           chmod 600 "$HOME/.ssh/igsekor_deploy"
           echo "${{ secrets.DEPLOY_CONFIG }}" > "$HOME/.ssh/config"
           chmod 600 "$HOME/.ssh/config"
-          ssh -o StrictHostKeyChecking=no deploy@igsekor.com
+          ssh -o StrictHostKeyChecking=no igsekor@igsekor.com
       - name: Установка модулей
         run: npm ci
       - name: Сборка сайта
@@ -44,4 +44,4 @@ jobs:
       - name: Публикация сайта
         run: |
           cd dist
-          rsync --archive --progress --compress --delete . igsekor.com:/web/sites/igsekor.com/www/
+          rsync --archive --progress --compress --delete . igsekor@igsekor.com:/web/sites/igsekor.com/www/
