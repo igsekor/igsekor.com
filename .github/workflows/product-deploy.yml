@@ -1,0 +1,47 @@
+name: Публикация сайта
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PATH_TO_CONTENT: ./content
+    steps:
+      - name: Загрузка репозитория
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Кэширование модулей
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Установка ключа для пользователя
+        run: |
+          set -eu
+          mkdir "$HOME/.ssh"
+          echo "${{ secrets.DEPLOY_KEY }}" > "$HOME/.ssh/igsekor_deploy"
+          chmod 600 "$HOME/.ssh/igsekor_deploy"
+          echo "${{ secrets.DEPLOY_CONFIG }}" > "$HOME/.ssh/config"
+          chmod 600 "$HOME/.ssh/config"
+          ssh -o StrictHostKeyChecking=no deploy@igsekor.com
+      - name: Установка модулей
+        run: npm ci
+      - name: Сборка сайта
+        run: npm run build
+      - name: Публикация сайта
+        run: |
+          cd dist
+          rsync --archive --progress --compress --delete . igsekor.com:/web/sites/igsekor.com/www/
