@@ -1,35 +1,30 @@
-@import './base.css';
+@import url(base.css);
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
-}
+:root {
+  --padding-horizontal: 30px;
+  --padding-vertical: 40px;
+  --border-spacer: 8px;
+  --border-header: 2px;
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
-}
+  --font-family: Comfortaa, sans-serif;
+  --header-1-size: 36px;
+  --header-2-size: 24px;
+  --year-size: 24px;
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+  --primary-color: black;
+  --secondary-color: white;
+  --grey-b-color: #6B6B6B;
+  --grey-m-color: #B4B1B1;
+  --grey-f-color: #DADADA;
+  --y-1983-color: #B5829A;
+  --y-1993-color: #A3A04D;
+  --y-2003-color: #7CC4C5;
+  --y-2013-color: #009572;
+  --y-2023-color: #BB2648;
+  --out-color: #03A4FF;
+  --it-color: #013451;
+  --ego-color: #034F79;
+  --super-ego-color: #0079BD;
+  --universe-color: #6ECBFF;
+  --back-color: #E1DBD5;
 }
