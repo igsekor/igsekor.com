@@ -1,3 +1,5 @@
+[![Публикация сайта](https://github.com/igsekor/igsekor_com/actions/workflows/product-deploy.yml/badge.svg)](https://github.com/igsekor/igsekor_com/actions/workflows/product-deploy.yml)
+
 # Сайт igsekor.com
 
 Этот шаблон должен помочь вам начать разработку с помощью Vue 3 и Vite.
