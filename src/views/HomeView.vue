@@ -1,55 +1,75 @@
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useConfigStore } from '@/stores/config'
 
+import NavigationBlock from '../components/NavigationBlock.vue'
+
+const navIndex = ref(0)
+
 const configStore = useConfigStore()
+
 const navProjects = computed(() => configStore.navProjects)
 const navArea = computed(() => configStore.navArea)
 const navResources = computed(() => configStore.navResources)
 const navArchives = computed(() => configStore.navArchives)
+
+const descriptionProjects = computed(() => configStore.descriptionProjects)
+const descriptionArea = computed(() => configStore.descriptionArea)
+const descriptionResources = computed(() => configStore.descriptionResources)
+const descriptionArchives = computed(() => configStore.descriptionArchives)
+
+function getHint() {
+  switch (navIndex.value) {
+    case 0: return descriptionProjects
+    case 1: return descriptionArea
+    case 2: return descriptionResources
+    case 3: return descriptionArchives
+  }
+}
 </script>
 
 <template>
   <main class="home">
-    <ul class="home__nav">
-      <li class="home__link home__link--projects">{{ navProjects }}</li>
-      <li class="home__link home__link--area">{{ navArea }}</li>
-      <li class="home__link home__link--resources">{{ navResources }}</li>
-      <li class="home__link home__link--archives">{{ navArchives }}</li>
-    </ul>
-    <div class="home__logo"></div>
+    <NavigationBlock class="home__nav" :navProjects="navProjects" :nav-area="navArea" :nav-resources="navResources" :nav-archives="navArchives" @hover="(index) => { navIndex = index }" />
+    <div class="home__logo">
+      <p class="home__description">{{ getHint() }}</p>
+    </div>
   </main>
 </template>
 
 <style>
 .home {
+  --logo-size: 377px;
+  --min-logo-width: 75.625vw;
   display: flex;
   flex-direction: column-reverse;
   gap: var(--padding-vertical);
-  align-items: center;
+  align-items: start;
   justify-content: flex-end;
   min-height: calc(100vh - var(--header-1-size) - var(--border-spacer) * 3 - var(--border-header) * 3 - (var(--padding-vertical) - var(--border-spacer)) * 2);
-  padding: var(--padding-vertical) 0px 0px;
+  padding: var(--padding-vertical) calc((100vw - min(var(--logo-size), var(--min-logo-width))) / 2);
 }
 
 @media (min-width: 630px) {
   .home {
     gap: 0px;
+    align-items: center;
     justify-content: center;
   }
 }
 
 .home__logo {
-  --logo-size: 377px;
   align-self: center;
   justify-self: center;
-  display: block;
-  width: min(var(--logo-size), 75.625vw);
-  height: min(var(--logo-size), 75.625vw);;
+  display: grid;
+  align-items: end;
+  min-width: min(var(--logo-size), 75.625vw);
+  min-height: min(var(--logo-size), 75.625vw);
+  padding: var(--padding-vertical) 0px;
   background-image: url(/logo.svg);
   background-repeat: no-repeat;
   background-position: 50%;
-  background-size: contain;
+  background-size: min(var(--logo-size), 75.625vw);
 }
 
 @media (min-width: 630px) {
@@ -58,104 +78,59 @@ const navArchives = computed(() => configStore.navArchives)
   }
 }
 
-.home__nav:has(.home__link--projects:hover) ~ .home__logo {
+.home__description {
+  display: none;
+  text-align: center;
+  font-size: var(--paragraph-size);
+  width: min(630px, 75.625vw);
+}
+
+@media (min-width: 630px) {
+  .home__nav:has(.nav__link:hover) ~ .home__logo > .home__description {
+    display: block;
+  }
+}
+
+.home__nav:has(.nav__link--projects:hover) ~ .home__logo {
   background-image: url(/logo-2023.svg);
 }
 
-.home__nav:has(.home__link--area:hover) ~ .home__logo {
+@media (min-width: 630px) {
+  .home__nav:has(.nav__link--projects:hover) ~ .home__logo > .home__description {
+    color: var(--y-2023-color);
+  }
+}
+
+.home__nav:has(.nav__link--area:hover) ~ .home__logo {
   background-image: url(/logo-2013.svg);
 }
 
-.home__nav:has(.home__link--resources:hover) ~ .home__logo {
+@media (min-width: 630px) {
+  .home__nav:has(.nav__link--area:hover) ~ .home__logo > .home__description {
+    color: var(--y-2013-color);
+  }
+}
+
+.home__nav:has(.nav__link--resources:hover) ~ .home__logo {
   background-image: url(/logo-2003.svg);
 }
 
-.home__nav:has(.home__link--archives:hover) ~ .home__logo {
-  background-image: url(/logo-1993.svg);
-}
-
-.home__nav {
-  --circle-size: 44px;
-  display: grid;
-  grid-template-rows: repeat(4, 1fr);
-  gap: var(--padding-vertical);
-  align-items: center;
-  padding: 0px;
-  margin: 0px;
-  list-style: none;
-}
-
 @media (min-width: 630px) {
-  .home__nav {
-    --circle-size: 75px;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: unset;
+  .home__nav:has(.nav__link--resources:hover) ~ .home__logo > .home__description {
+    color: var(--y-2003-color);
   }
 }
 
-.home__link {
-  display: grid;
-  grid-template-columns: min-content max-content;
-  gap: calc(var(--padding-vertical) / 2);
-  align-items: center;
-  font-size: var(--header-2-size);
-  text-align: center;
-  line-height: 1;
-}
-
-.home__link:hover {
-  cursor: pointer;
-}
-
-.home__link:hover.home__link--projects::before {
-  background-color: var(--y-2023-color);
-}
-
-.home__link:hover.home__link--area::before {
-  background-color: var(--y-2013-color);
-}
-
-.home__link:hover.home__link--resources::before {
-  background-color: var(--y-2003-color);
-}
-
-.home__link:hover.home__link--archives::before {
-  background-color: var(--y-1993-color);
-}
-
 @media (min-width: 630px) {
-  .home__link {
-    justify-self: center;
-    grid-template-rows: repeat(2, min-content);
-    grid-template-columns: unset;
-    justify-content: center;
+  .home__nav:has(.nav__link--archives:hover) ~ .home__logo {
+    background-image: url(/logo-1993.svg);
   }
 }
 
-.home__link::before {
-  justify-self: center;
-  content: ' ';
-  height: var(--circle-size);
-  width: var(--circle-size);
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.home__link--projects::before {
-  background-color: var(--it-color);
-}
-
-.home__link--area::before {
-  background-color: var(--ego-color);
-}
-
-.home__link--resources::before {
-  background-color: var(--super-ego-color);
-}
-
-.home__link--archives::before {
-  background-color: var(--universe-color);
+@media (min-width: 630px) {
+  .home__nav:has(.nav__link--archives:hover) ~ .home__logo > .home__description {
+    color: var(--y-1993-color);
+  }
 }
 </style>
 
