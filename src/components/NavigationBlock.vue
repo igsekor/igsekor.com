@@ -45,8 +45,9 @@ defineEmits([ 'hover' ])
 @media (min-width: 630px) {
   .nav {
     --circle-size: 75px;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, calc(630px / 4));
     grid-template-rows: unset;
+    gap: 0;
     justify-items: center;
   }
 }
